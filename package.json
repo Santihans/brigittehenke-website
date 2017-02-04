@@ -52,6 +52,7 @@
     }
   },
   "dependencies": {
-    "prismic.io": "^3.3.1"
+    "prismic.io": "^3.3.1",
+    "query-string": "^4.3.1"
   }
 }
