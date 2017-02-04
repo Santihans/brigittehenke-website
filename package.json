@@ -50,5 +50,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "prismic.io": "^3.3.1"
   }
 }
