@@ -1,6 +1,6 @@
 {
   "prismic": {
-    "repository": "XXXXXXX",
-    "cdn": false
+    "repository": "brigittehenke",
+    "cdn": true
   }
 }
