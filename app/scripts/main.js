@@ -1,4 +1,5 @@
 const prismic = require('./prismic.io');
+const paperRipple = require('./paperRipple');
 
 var loadContent = function(prismicQuery) {
   return prismicQuery([
@@ -21,7 +22,7 @@ prismic.getApi()
             thumbnail: collection.getImageView('exhibition.collection-image', 'collection-thumb').url
           };
 
-          var source   = $("#collection").html();
+          var source = $("#collection").html();
           var template = Handlebars.compile(source);
           $('.collection').append(template(collectioData));
 
@@ -43,5 +44,7 @@ prismic.getApi()
 
         });
 
-      })
+      }).then(function() {
+      paperRipple.updatePaperRipple();
+    })
   });

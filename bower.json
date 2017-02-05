@@ -4,13 +4,20 @@
   "dependencies": {
     "bootstrap": "~4.0.0-alpha.6",
     "underscore": "^1.8.3",
-    "handlebars": "^4.0.5"
+    "handlebars": "^4.0.5",
+    "paper-ripple": "*"
   },
   "overrides": {
     "bootstrap": {
       "main": [
         "scss/bootstrap.scss",
         "dist/js/bootstrap.js"
+      ]
+    },
+    "paper-ripple": {
+      "main": [
+        "src/css/paper-ripple.css",
+        "dist/PaperRipple.js"
       ]
     }
   },

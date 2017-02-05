@@ -11,6 +11,7 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/paper-ripple/src/css/paper-ripple.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -24,10 +25,10 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="header">
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="paperRipple navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <a class="navbar-brand" href="#">Brigitte Henke</a>
@@ -35,7 +36,7 @@
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link paperRipple" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
@@ -53,8 +54,6 @@
           </div>
         </nav>
       </div>
-
-
 
       <ul class="collection"></ul>
     </div>
@@ -75,6 +74,7 @@
     <script src="/bower_components/tether/dist/js/tether.js"></script>
     <script src="/bower_components/underscore/underscore.js"></script>
     <script src="/bower_components/handlebars/handlebars.js"></script>
+    <script src="/bower_components/paper-ripple/dist/PaperRipple.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -98,7 +98,7 @@
 
     <script id="collection" type="text/x-handlebars-template">
       <li class="collection-item">
-        <a class="gallery" href="javascript:;">
+        <a class="gallery paperRipple" href="javascript:;">
           <img src="{{thumbnail}}" alt="{{title}}">
           <h3>{{title}}</h3>
         </a>
