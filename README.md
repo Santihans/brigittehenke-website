@@ -1,6 +1,7 @@
-# prismic-webapp-boilerplate
-Front-end web app using gulp and prismic.io as the CMS backend.
+# Artist Website for Brigitte Henke 
 
+Front-end web app using gulp and prismic.io as the CMS backend.
+Fork from https://github.com/Santihans/prismic-webapp-boilerplate
 (Initially used https://github.com/yeoman/generator-webapp as a starting point)
 
 ## Getting Started
