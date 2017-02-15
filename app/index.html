@@ -33,29 +33,32 @@
           </button>
           <a class="navbar-brand" href="#">Brigitte Henke</a>
 
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
               <li class="nav-item active">
                 <a class="nav-link paperRipple" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link paperRipple" href="#/malerei">Malerei</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link paperRipple" href="#/ausstellungen">Ausstellungen</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link paperRipple" href="#/atelier">Atelier</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link paperRipple" href="#/biographie">Biographie</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#/kontakt">Kontakt</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
 
-      <ul class="collection"></ul>
+      <div id="content"></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -94,12 +97,15 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
+    <script src="scripts/app/HomeView.js"></script>
+    <script src="scripts/app/CollectionView.js"></script>
+    <script src="scripts/app/ContactView.js"></script>
     <script src="scripts/bundle.js"></script>
     <!-- endbuild -->
 
     <script id="collection" type="text/x-handlebars-template">
       <li class="collection-item">
-        <a class="gallery paperRipple" href="javascript:;">
+        <a class="gallery paperRipple" href="#/malerei/{{slug}}">
           <img src="{{thumbnail}}" alt="{{title}}">
           <h3>{{title}}</h3>
         </a>

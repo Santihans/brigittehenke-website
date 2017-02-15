@@ -1,0 +1,12 @@
+<h1>Collection</h1>
+
+<ul class="collection">
+  {{#each data}}
+  <li class="collection-item">
+    <a class="gallery paperRipple" href="#/malerei/{{slug}}">
+      <img src="{{thumbnail}}" alt="{{title}}">
+      <h3>{{title}}</h3>
+    </a>
+  </li>
+  {{/each}}
+</ul>
