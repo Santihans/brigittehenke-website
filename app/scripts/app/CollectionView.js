@@ -14,7 +14,7 @@ var CollectionView = Backbone.View.extend({
       var gallery = document.getGroup('exhibition.artwork').toArray();
       gallery.forEach(function(artwork) {
         galleryData.push({
-          id: encodeURI(artwork.getText('artwork-caption')),
+          imageUrl: encodeURI(artwork.getText('artwork-caption')),
           image: artwork.getImage('artwork-image').url,
           thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
           caption: artwork.getText('artwork-caption'),
@@ -27,7 +27,7 @@ var CollectionView = Backbone.View.extend({
 
       var templateVariables = {
         title: document.getText('exhibition.collection-title'),
-        slug: document.slug,
+        id: document.id,
         data: galleryData
       };
 
