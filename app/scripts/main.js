@@ -3,7 +3,7 @@ const paperRipple = require('./paperRipple');
 
 var loadContent = function(prismicQuery, predicates) {
   return prismicQuery([
-    prismic.Prismic.Predicates.at('document.type', predicates)
+    prismic.Prismic.Predicates.at.apply(this, predicates)
   ]).then(function(response) {
     return response.results;
   });
@@ -13,8 +13,9 @@ var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'homeRoute',
     'home': 'homeRoute',
-    'malerei': 'collectionRoute',
-    'malerei/:query': 'galleryRoute',
+    'malerei': 'exhibitionRoute',
+    'malerei/:collection': 'collectionRoute',
+    'malerei/:collection/:artwork': 'artworkRoute',
     'ausstellungen': 'homeRoute',
     'atelier': 'homeRoute',
     'biographie': 'homeRoute',
@@ -23,7 +24,7 @@ var AppRouter = Backbone.Router.extend({
 
   homeRoute: function() {
     prismic.getApi().then(function(api){
-      loadContent(api, 'home')
+      loadContent(api, ['document.type', 'home'])
         .then(function(document) {
           console.log(document[0]);
         })
@@ -34,7 +35,7 @@ var AppRouter = Backbone.Router.extend({
 
   contactRoute: function() {
     prismic.getApi().then(function(api){
-      loadContent(api, 'contact')
+      loadContent(api, ['document.type', 'contact'])
         .then(function(document) {
           var contactView = new ContactView();
           contactView.render(document);
@@ -42,60 +43,25 @@ var AppRouter = Backbone.Router.extend({
     });
   },
 
-  collectionRoute: function() {
+  exhibitionRoute: function() {
     prismic.getApi().then(function(api){
-      loadContent(api, 'exhibition')
+      loadContent(api, ['document.type', 'exhibition'])
+        .then(function(document) {
+          var collectionView = new ExhibitionView();
+          collectionView.render(document);
+          console.log(document);
+        })
+    });
+  },
+
+  collectionRoute: function(collectionId) {
+    prismic.getApi().then(function(api){
+      loadContent(api, ['document.id', collectionId])
         .then(function(document) {
           var collectionView = new CollectionView();
           collectionView.render(document);
         })
     });
-  },
-
-  galleryRoute: function(collection) {
-    $("#content").html('<ul class="collection"></ul>');
-    $("#content").append('<h2>' + collection + '</h2>');
-
-    prismic.getApi()
-      .then(function(api) {
-        loadContent(api, 'exhibition')
-          .then(function(document) {
-            $.each(document, function(index, value) {
-              var collection = value;
-              var collectioData = {
-                title: collection.getText('exhibition.collection-title'),
-                slug: collection.slug,
-                description: collection.getText('exhibition.collection-description'),
-                image: collection.getImage('exhibition.collection-image').url,
-                thumbnail: collection.getImageView('exhibition.collection-image', 'collection-thumb').url
-              };
-
-              var source = $("#collection").html();
-              var template = Handlebars.compile(source);
-              $('.collection').append(template(collectioData));
-
-              // console.log(collectioData);
-
-              var gallery = collection.getGroup('exhibition.artwork').toArray();
-              gallery.forEach(function(artwork) {
-                var galleryData = {
-                  image: artwork.getImage('artwork-image').url,
-                  thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
-                  caption: artwork.getText('artwork-caption'),
-                  dimensionsX: artwork.getNumber('artwork-dimensions-x'),
-                  dimensionsY: artwork.getNumber('artwork-dimensions-y'),
-                  year: artwork.getText('artwork-year'),
-                  availability: artwork.getBoolean('artwork-availability')
-                };
-                console.log(galleryData);
-              });
-
-            });
-
-          }).then(function() {
-          paperRipple.updatePaperRipple();
-        })
-      });
   }
 });
 

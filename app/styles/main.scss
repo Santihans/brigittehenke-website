@@ -25,7 +25,6 @@ body {
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.marketing,
 .footer {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -34,6 +33,25 @@ body {
 /* Custom page header */
 .header {
   padding-bottom: 1rem;
+}
+
+#content {
+  > h1 {
+    font-size: 1.2em;
+    color: $colorSubtle;
+  }
+}
+
+.exhibition {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+
+  .exhibition-item {
+    flex: 1 1 auto;
+    padding: 1rem;
+  }
 }
 
 .collection {
