@@ -1,8 +1,8 @@
 // bower:scss
 @import "bower_components/bootstrap/scss/bootstrap.scss";
 // endbower
-
 @import "variables";
+@import "helpers";
 @import "layout";
 @import "paperRipple";
 
@@ -26,8 +26,8 @@ body {
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .footer {
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 /* Custom page header */
@@ -37,32 +37,31 @@ body {
 
 #content {
   > h1 {
+    margin: 0 15px 10px;
     font-size: 1.2em;
     color: $colorSubtle;
   }
 }
 
-.exhibition {
-  display: flex;
-  flex-wrap: wrap;
+.exhibition, .collection {
   list-style: none;
+  margin: 0;
   padding: 0;
 
-  .exhibition-item {
-    flex: 1 1 auto;
-    padding: 1rem;
+  .ratio-helper {
+    @include keep-ratio(1);
   }
+}
+.exhibition {
+
 }
 
 .collection {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-
   .collection-item {
-    flex: 1 1 auto;
-    padding: 1rem;
+    h3 {
+      font-size: 1.1em;
+      margin-bottom: .1em;
+    }
   }
 }
 
