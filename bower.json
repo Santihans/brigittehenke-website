@@ -6,7 +6,8 @@
     "underscore": "^1.8.3",
     "handlebars": "^4.0.5",
     "paper-ripple": "*",
-    "backbone": "^1.3.3"
+    "backbone": "^1.3.3",
+    "slick-carousel": "^1.6.0"
   },
   "overrides": {
     "bootstrap": {
