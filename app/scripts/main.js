@@ -23,7 +23,7 @@ var AppRouter = Backbone.Router.extend({
   },
 
   homeRoute: function() {
-    prismic.getApi().then(function(api){
+    prismic.getApi().then(function(api) {
       loadContent(api, ['document.type', 'home'])
         .then(function(document) {
           console.log(document[0]);
@@ -34,7 +34,7 @@ var AppRouter = Backbone.Router.extend({
   },
 
   contactRoute: function() {
-    prismic.getApi().then(function(api){
+    prismic.getApi().then(function(api) {
       loadContent(api, ['document.type', 'contact'])
         .then(function(document) {
           var contactView = new ContactView();
@@ -44,7 +44,7 @@ var AppRouter = Backbone.Router.extend({
   },
 
   exhibitionRoute: function() {
-    prismic.getApi().then(function(api){
+    prismic.getApi().then(function(api) {
       loadContent(api, ['document.type', 'exhibition'])
         .then(function(document) {
           var collectionView = new ExhibitionView();
@@ -55,7 +55,8 @@ var AppRouter = Backbone.Router.extend({
   },
 
   collectionRoute: function(collectionId) {
-    prismic.getApi().then(function(api){
+    var self = this;
+    prismic.getApi().then(function(api) {
       loadContent(api, ['document.id', collectionId])
         .then(function(document) {
           var collectionView = new CollectionView();
@@ -65,7 +66,7 @@ var AppRouter = Backbone.Router.extend({
   },
 
   artworkRoute: function(collectionId) {
-    prismic.getApi().then(function(api){
+    prismic.getApi().then(function(api) {
       loadContent(api, ['document.id', collectionId])
         .then(function(document) {
           var collectionView = new CollectionView();

@@ -1,9 +1,9 @@
-<h1>Malerei: {{title}}</h1>
+<h1><a href="#/malerei">Malerei:</a> {{title}}</h1>
 
 <ul class="collection row">
   {{#each data}}
   <li class="collection-item col-sm-6 col-md-4 col-lg-3">
-    <a class="gallery paperRipple" href="#/malerei/{{../id}}/{{imageUrl}}">
+    <a class="showImage paperRipple" href="#/malerei/{{../id}}/{{uri}}" data-image-url="{{image}}" data-toggle="modal" data-target=".bd-example-modal-lg">
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{caption}}">
       </div>
@@ -14,3 +14,30 @@
   </li>
   {{/each}}
 </ul>
+
+<div id="galleryModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div id="galleryCarousel">
+        {{#each data}}
+        <div class="item">
+          <div class="item-image">
+            <img class="galleryImage d-block img-fluid" src="{{image}}" alt="{{caption}}">
+          </div>
+          <div class="item-info">
+            <div class="galleryCard">
+              <h4>{{caption}}{{#if availability}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}
+              </h4>
+              <div>{{dimensionsX}}x{{dimensionsY}}</div>
+              <div>{{year}}</div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

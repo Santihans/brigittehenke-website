@@ -9,12 +9,11 @@ var CollectionView = Backbone.View.extend({
     $.get('templates/collection.html', function(data) {
       var template = Handlebars.compile(data);
       var galleryData = [];
-      console.log(document);
 
       var gallery = document.getGroup('exhibition.artwork').toArray();
       gallery.forEach(function(artwork) {
         galleryData.push({
-          imageUrl: encodeURI(artwork.getText('artwork-caption')),
+          uri: encodeURI(artwork.getText('artwork-caption')),
           image: artwork.getImage('artwork-image').url,
           thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
           caption: artwork.getText('artwork-caption'),
@@ -32,7 +31,45 @@ var CollectionView = Backbone.View.extend({
       };
 
       self.$el.html(template(templateVariables));
-    }, 'html');
+    }, 'html').then(function() {
+      self.ready();
+    });
+  },
+
+  events: {
+    "click .showImage": function(event) {
+      var image = $(event.currentTarget).attr('data-image-url');
+    },
+
+    "click .showLegend": function(event) {
+      this.$(event.currentTarget).toggleClass('legend-visible')
+    }
+  },
+
+  ready: function() {
+    var self = this;
+
+    this.$('#galleryModal').on('shown.bs.modal', function(e) {
+      self.$('#galleryCarousel').slick({
+        prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
+        nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>'
+      });
+
+      self.positionGalleryCard();
+    });
+  },
+
+
+  positionGalleryCard: function() {
+    this.$('.item').each(function() {
+      var $image = $(this).find('.galleryImage');
+      $(this).find('.galleryCard').css({
+        'padding-left': $image[0].offsetLeft,
+        'padding-right': $image[0].offsetLeft,
+        'top': -$image[0].offsetTop,
+        'opacity': 1
+      });
+    });
   }
 
 });
