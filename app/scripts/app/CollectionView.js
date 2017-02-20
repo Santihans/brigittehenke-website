@@ -73,8 +73,14 @@ var CollectionView = Backbone.View.extend({
       image.trigger('loaded');
     });
 
+    this._slick.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      this._index = currentSlide;
+      self.$('.item').removeClass('card-visible');
+    });
+
     this._slick.on('afterChange', function(event, slick, currentSlide, nextSlide) {
       this._index = currentSlide;
+      self.positionGalleryCard(self.$('[data-slick-index="' + currentSlide + '"]'));
     });
 
     $.when(modalReady).done(function() {
@@ -90,12 +96,14 @@ var CollectionView = Backbone.View.extend({
   },
 
   positionGalleryCard: function($item) {
-    $item.addClass('image-loaded');
-    var image = $item.find('.galleryImage')[0];
-    $item.find('.galleryCard').css({
-      'padding-left': image.offsetLeft,
-      'padding-right': image.offsetLeft,
-      'top': -image.offsetTop
-    });
+    if ($item.find('.galleryImage')[0].hasAttribute('src')) {
+      var image = $item.find('.galleryImage')[0];
+      $item.find('.galleryCard').css({
+        'padding-left': image.offsetLeft,
+        'padding-right': image.offsetLeft,
+        'top': -image.offsetTop
+      });
+      $item.addClass('card-visible');
+    }
   }
 });
