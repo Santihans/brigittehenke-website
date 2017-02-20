@@ -3,7 +3,7 @@
 <ul class="collection row">
   {{#each data}}
   <li class="collection-item col-sm-6 col-md-4 col-lg-3">
-    <a class="showImage paperRipple" href="#/malerei/{{../id}}/{{uri}}" data-image-url="{{image}}" data-toggle="modal" data-target=".bd-example-modal-lg">
+    <a class="showImage paperRipple" href="#/malerei/{{../id}}/{{@index}}" data-index="{{@index}}" data-toggle="modal" data-target="#galleryModal">
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{caption}}">
       </div>
@@ -15,7 +15,7 @@
   {{/each}}
 </ul>
 
-<div id="galleryModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -25,7 +25,7 @@
         {{#each data}}
         <div class="item">
           <div class="item-image">
-            <img class="galleryImage d-block img-fluid" src="{{image}}" alt="{{caption}}">
+            <img class="galleryImage d-block img-fluid" data-lazy="{{image}}" alt="{{caption}}">
           </div>
           <div class="item-info">
             <div class="galleryCard">

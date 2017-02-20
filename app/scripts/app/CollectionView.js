@@ -1,5 +1,9 @@
 var CollectionView = Backbone.View.extend({
   el: "#content",
+
+  _slick: null,
+  _index: null,
+
   initialize: function() {
     console.log('Collection View Initialized');
   },
@@ -38,7 +42,7 @@ var CollectionView = Backbone.View.extend({
 
   events: {
     "click .showImage": function(event) {
-      var image = $(event.currentTarget).attr('data-image-url');
+      this._index = $(event.currentTarget).attr('data-index');
     },
 
     "click .showLegend": function(event) {
@@ -48,28 +52,50 @@ var CollectionView = Backbone.View.extend({
 
   ready: function() {
     var self = this;
+    var modalReady = $.Deferred();
+
+    this._slick = this.$('#galleryCarousel').slick({
+      prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
+      nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
+      lazyLoad: 'ondemand',
+      initialSlide: self._index
+    });
 
     this.$('#galleryModal').on('shown.bs.modal', function(e) {
-      self.$('#galleryCarousel').slick({
-        prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
-        nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>'
-      });
+      self.updateSlick();
+      modalReady.resolve();
+    });
 
-      self.positionGalleryCard();
+    this.$('#galleryModal').on('hide.bs.modal', function(e) {
+    });
+
+    this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
+      image.trigger('loaded');
+    });
+
+    this._slick.on('afterChange', function(event, slick, currentSlide, nextSlide) {
+      this._index = currentSlide;
+    });
+
+    $.when(modalReady).done(function() {
+      self.$('.galleryImage').on('loaded', function() {
+        self.positionGalleryCard($(this).closest('.item'));
+      });
     });
   },
 
+  updateSlick: function() {
+    this._slick.slick('slickGoTo', this._index, true);
+    this._slick.slick('setPosition');
+  },
 
-  positionGalleryCard: function() {
-    this.$('.item').each(function() {
-      var $image = $(this).find('.galleryImage');
-      $(this).find('.galleryCard').css({
-        'padding-left': $image[0].offsetLeft,
-        'padding-right': $image[0].offsetLeft,
-        'top': -$image[0].offsetTop,
-        'opacity': 1
-      });
+  positionGalleryCard: function($item) {
+    $item.addClass('image-loaded');
+    var image = $item.find('.galleryImage')[0];
+    $item.find('.galleryCard').css({
+      'padding-left': image.offsetLeft,
+      'padding-right': image.offsetLeft,
+      'top': -image.offsetTop
     });
   }
-
 });
