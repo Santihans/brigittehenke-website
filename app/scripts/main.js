@@ -65,12 +65,12 @@ var AppRouter = Backbone.Router.extend({
     });
   },
 
-  artworkRoute: function(collectionId) {
+  artworkRoute: function(collectionId, artwork) {
     prismic.getApi().then(function(api) {
       loadContent(api, ['document.id', collectionId])
         .then(function(document) {
           var collectionView = new CollectionView();
-          collectionView.render(document);
+          collectionView.render(document, artwork);
         })
     });
   }

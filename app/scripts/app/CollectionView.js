@@ -12,15 +12,20 @@ var CollectionView = Backbone.View.extend({
   },
   /**
    * @param {Object} document
+   * @param {String} artworkId
    */
-  render: function(document) {
+  render: function(document, artworkId) {
     var self = this;
+    var itemsCount;
+    var artworkIndex = parseInt(artworkId);
     var documentContent = document[0];
+
     $.get('templates/collection.html', function(data) {
       var template = Handlebars.compile(data);
       var galleryData = [];
 
       var gallery = documentContent.getGroup('exhibition.artwork').toArray();
+      itemsCount = gallery.length;
       gallery.forEach(function(artwork) {
         galleryData.push({
           uri: encodeURI(artwork.getText('artwork-caption')),
@@ -43,6 +48,10 @@ var CollectionView = Backbone.View.extend({
       self.$el.html(template(templateVariables));
     }, 'html').then(function() {
       self.ready();
+
+      if (artworkIndex > 0 && artworkIndex <= itemsCount) {
+        self.$('[data-index="' + artworkIndex + '"]').trigger('click');
+      }
     });
   },
 
