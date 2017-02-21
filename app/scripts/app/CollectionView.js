@@ -52,42 +52,56 @@ var CollectionView = Backbone.View.extend({
 
   ready: function() {
     var self = this;
-    var modalReady = $.Deferred();
 
-    this._slick = this.$('#galleryCarousel').slick({
-      prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
-      nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
-      lazyLoad: 'ondemand',
-      initialSlide: self._index
+    this.$('#galleryModal').on('show.bs.modal', function(e) {
+      self.setupSlick();
     });
 
     this.$('#galleryModal').on('shown.bs.modal', function(e) {
       self.updateSlick();
-      modalReady.resolve();
+
+      self.$('#galleryCarousel').addClass('carousel-visible');
+      self.$('.galleryImage').on('loaded', function() {
+        self.positionGalleryCard($(this).closest('.item'));
+      });
     });
 
     this.$('#galleryModal').on('hide.bs.modal', function(e) {
+      self.$('#galleryCarousel').removeClass('carousel-visible');
+      self.getSlick().slick('unslick');
     });
+
+  },
+
+  setupSlick: function() {
+    var self = this;
+    this._slick = this.$('#galleryCarousel').slick({
+      prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
+      nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
+      lazyLoad: 'ondemand',
+      initialSlide: this._index
+    });
+
 
     this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
       image.trigger('loaded');
     });
 
     this._slick.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-      this._index = currentSlide;
+      self._index = currentSlide;
       self.$('.item').removeClass('card-visible');
     });
 
     this._slick.on('afterChange', function(event, slick, currentSlide, nextSlide) {
-      this._index = currentSlide;
-      self.positionGalleryCard(self.$('[data-slick-index="' + currentSlide + '"]'));
+      self._index = currentSlide;
+      _.defer(function() {
+        self.positionGalleryCard(self.$('[data-slick-index="' + currentSlide + '"]'));
+      })
     });
+  },
 
-    $.when(modalReady).done(function() {
-      self.$('.galleryImage').on('loaded', function() {
-        self.positionGalleryCard($(this).closest('.item'));
-      });
-    });
+  getSlick: function() {
+    return this._slick;
   },
 
   updateSlick: function() {

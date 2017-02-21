@@ -105,6 +105,13 @@ body {
 }
 
 #galleryCarousel {
+  opacity: 0;
+  transition: opacity 200ms 200ms;
+
+  &.carousel-visible {
+    opacity: 1;
+  }
+
   .slick-prev, .slick-next {
     font-size: 16px;
     line-height: 50px;
