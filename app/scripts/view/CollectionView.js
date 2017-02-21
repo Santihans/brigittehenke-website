@@ -7,6 +7,9 @@ var CollectionView = Backbone.View.extend({
   /** @type {Number} */
   _index: null,
 
+  /** @type {String} */
+  _baseUrl: null,
+
   initialize: function() {
     console.log('Collection View Initialized');
   },
@@ -19,6 +22,13 @@ var CollectionView = Backbone.View.extend({
     var itemsCount;
     var artworkIndex = parseInt(artworkId);
     var documentContent = document[0];
+
+    if (null === this._baseUrl) {
+      var currentRoute = Backbone.history.getFragment();
+      var n = currentRoute.indexOf(documentContent.id) + documentContent.id.length;
+      this._baseUrl = currentRoute.substring(0, n != -1 ? n : currentRoute.length);
+      this._closeModal();
+    }
 
     $.get('templates/collection.html', function(data) {
       var template = Handlebars.compile(data);
@@ -67,12 +77,13 @@ var CollectionView = Backbone.View.extend({
 
   ready: function() {
     var self = this;
+    var $modal = this.$('#galleryModal');
 
-    this.$('#galleryModal').on('show.bs.modal', function(e) {
+    $modal.on('show.bs.modal', function(e) {
       self.setupSlick();
     });
 
-    this.$('#galleryModal').on('shown.bs.modal', function(e) {
+    $modal.on('shown.bs.modal', function(e) {
       self.updateSlick();
 
       self.$('#galleryCarousel').addClass('carousel-visible');
@@ -81,11 +92,12 @@ var CollectionView = Backbone.View.extend({
       });
     });
 
-    this.$('#galleryModal').on('hide.bs.modal', function(e) {
+    $modal.on('hide.bs.modal', function(e) {
       self.$('#galleryCarousel').removeClass('carousel-visible');
       self.getSlick().slick('unslick');
       self._slick = null;
       self._index = null;
+      Backbone.history.navigate(self._baseUrl);
     });
   },
 
@@ -110,6 +122,7 @@ var CollectionView = Backbone.View.extend({
 
     this._slick.on('afterChange', function(event, slick, currentSlide, nextSlide) {
       self._index = currentSlide;
+      Backbone.history.navigate(self._baseUrl + '/' + currentSlide);
       _.defer(function() {
         self.positionGalleryCard(self.$('[data-slick-index="' + currentSlide + '"]'));
       })
@@ -154,5 +167,9 @@ var CollectionView = Backbone.View.extend({
     this._slick.on('destroy', function() {
       $(window).off('resize', callback);
     });
+  },
+
+  _closeModal: function() {
+    this.$('#galleryModal').modal('hide');
   }
 });
