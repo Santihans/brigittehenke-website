@@ -1,20 +1,26 @@
 var CollectionView = Backbone.View.extend({
   el: "#content",
 
+  /** @type {Object} */
   _slick: null,
+
+  /** @type {Number} */
   _index: null,
 
   initialize: function() {
     console.log('Collection View Initialized');
   },
+  /**
+   * @param {Object} document
+   */
   render: function(document) {
     var self = this;
-    var document = document[0];
+    var documentContent = document[0];
     $.get('templates/collection.html', function(data) {
       var template = Handlebars.compile(data);
       var galleryData = [];
 
-      var gallery = document.getGroup('exhibition.artwork').toArray();
+      var gallery = documentContent.getGroup('exhibition.artwork').toArray();
       gallery.forEach(function(artwork) {
         galleryData.push({
           uri: encodeURI(artwork.getText('artwork-caption')),
@@ -29,8 +35,8 @@ var CollectionView = Backbone.View.extend({
       });
 
       var templateVariables = {
-        title: document.getText('exhibition.collection-title'),
-        id: document.id,
+        title: documentContent.getText('exhibition.collection-title'),
+        id: documentContent.id,
         data: galleryData
       };
 
@@ -100,6 +106,9 @@ var CollectionView = Backbone.View.extend({
     });
   },
 
+  /**
+   * @returns {Slick|null}
+   */
   getSlick: function() {
     return this._slick;
   },
@@ -109,6 +118,9 @@ var CollectionView = Backbone.View.extend({
     this._slick.slick('setPosition');
   },
 
+  /**
+   * @param {jQuery} $item
+   */
   positionGalleryCard: function($item) {
     if ($item.find('.galleryImage')[0].hasAttribute('src')) {
       var image = $item.find('.galleryImage')[0];
