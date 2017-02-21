@@ -16,34 +16,34 @@ var AppRouter = Backbone.Router.extend({
   homeRoute: function() {
     var query = ['document.type', 'home'];
     var view = new HomeView();
-    this._handlePrismicQuery(query, view);
+    this._prepareView(query, view);
   },
 
   contactRoute: function() {
     var query = ['document.type', 'contact'];
     var view = new ContactView();
-    this._handlePrismicQuery(query, view);
+    this._prepareView(query, view);
   },
 
   exhibitionRoute: function() {
     var query = ['document.type', 'exhibition'];
     var view = new ExhibitionView();
-    this._handlePrismicQuery(query, view);
+    this._prepareView(query, view);
   },
 
   collectionRoute: function(collectionId) {
     var query = ['document.id', collectionId];
     var view = new CollectionView();
-    this._handlePrismicQuery(query, view);
+    this._prepareView(query, view);
   },
 
   artworkRoute: function(collectionId, artwork) {
     var query = ['document.id', collectionId];
     var view = new CollectionView();
-    this._handlePrismicQuery(query, view, artwork);
+    this._prepareView(query, view, artwork);
   },
 
-  _handlePrismicQuery: function(query, view, params) {
+  _prepareView: function(query, view, params) {
     var self = this;
     prismic.getApi().then(function(api) {
       self._loadPrismicContent(api, query)
