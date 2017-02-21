@@ -75,8 +75,9 @@ var CollectionView = Backbone.View.extend({
     this.$('#galleryModal').on('hide.bs.modal', function(e) {
       self.$('#galleryCarousel').removeClass('carousel-visible');
       self.getSlick().slick('unslick');
+      self._slick = null;
+      self._index = null;
     });
-
   },
 
   setupSlick: function() {
@@ -104,6 +105,8 @@ var CollectionView = Backbone.View.extend({
         self.positionGalleryCard(self.$('[data-slick-index="' + currentSlide + '"]'));
       })
     });
+
+    this.handleWindowResize();
   },
 
   /**
@@ -131,5 +134,16 @@ var CollectionView = Backbone.View.extend({
       });
       $item.addClass('card-visible');
     }
+  },
+
+  handleWindowResize: function() {
+    var self = this;
+    var callback = _.debounce(function() {
+      self.positionGalleryCard(self.$('[data-slick-index="' + self._index + '"]'));
+    }, 200);
+    $(window).on('resize', callback);
+    this._slick.on('destroy', function() {
+      $(window).off('resize', callback);
+    });
   }
 });
