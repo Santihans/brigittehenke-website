@@ -88,6 +88,7 @@ var CollectionView = Backbone.View.extend({
 
       self.$('#galleryCarousel').addClass('carousel-visible');
       self.$('.galleryImage').on('loaded', function() {
+        $(this).siblings('.spinner').css('visibility', 'hidden');
         self.positionGalleryCard($(this).closest('.item'));
       });
     });
