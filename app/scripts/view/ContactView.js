@@ -1,19 +1,13 @@
-var ContactView = Backbone.View.extend({
-  el: "#content",
-  initialize: function() {
-    console.log('Contact View Initialized');
-  },
-  render: function(document) {
-    var self = this;
-    $.get('templates/contact.html', function(data) {
-      var template = Handlebars.compile(data);
-      var templateVariables = {
-        address: document[0].getStructuredText('contact.contact-address').asHtml(),
-        email: document[0].getText('contact.contact-email')
-      };
+var ContactView = AbstractView.extend({
 
-      self.$el.html(template({data: templateVariables}));
-    }, 'html');
+  template: 'contact',
+
+  setup: function(document) {
+    var data = document[0];
+    
+    return {
+      address: data.getStructuredText('contact.contact-address').asHtml(),
+      email: data.getText('contact.contact-email')
+    };
   }
-
 });

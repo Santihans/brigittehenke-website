@@ -1,5 +1,9 @@
-var CollectionView = Backbone.View.extend({
-  el: "#content",
+var CollectionView = AbstractView.extend({
+
+  template: 'collection',
+
+  /** @type {Number} */
+  _requestedArtwork: null,
 
   /** @type {Object} */
   _slick: null,
@@ -9,61 +13,6 @@ var CollectionView = Backbone.View.extend({
 
   /** @type {String} */
   _baseUrl: null,
-
-  initialize: function() {
-    console.log('Collection View Initialized');
-  },
-
-  /**
-   * @param {Object} document
-   * @param {String} artworkId
-   */
-  render: function(document, artworkId) {
-    var self = this;
-    var itemsCount;
-    var artworkIndex = parseInt(artworkId);
-    var documentContent = document[0];
-
-    if (null === this._baseUrl) {
-      var currentRoute = Backbone.history.getFragment();
-      var n = currentRoute.indexOf(documentContent.id) + documentContent.id.length;
-      this._baseUrl = currentRoute.substring(0, n != -1 ? n : currentRoute.length);
-    }
-
-    $.get('templates/collection.html', function(data) {
-      var template = Handlebars.compile(data);
-      var galleryData = [];
-
-      var gallery = documentContent.getGroup('exhibition.artwork').toArray();
-      itemsCount = gallery.length;
-      gallery.forEach(function(artwork) {
-        galleryData.push({
-          uri: encodeURI(artwork.getText('artwork-caption')),
-          image: artwork.getImage('artwork-image').url,
-          thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
-          caption: artwork.getText('artwork-caption'),
-          dimensionsX: artwork.getNumber('artwork-dimensions-x'),
-          dimensionsY: artwork.getNumber('artwork-dimensions-y'),
-          year: artwork.getText('artwork-year'),
-          availability: artwork.getBoolean('artwork-availability')
-        });
-      });
-
-      var templateVariables = {
-        title: documentContent.getText('exhibition.collection-title'),
-        id: documentContent.id,
-        data: galleryData
-      };
-
-      self.$el.html(template(templateVariables));
-    }, 'html').then(function() {
-      self.ready();
-
-      if (artworkIndex >= 0 && artworkIndex <= --itemsCount) {
-        self.$('[data-index="' + artworkIndex + '"]').trigger('click');
-      }
-    });
-  },
 
   events: {
     "click .showImage": function(event) {
@@ -75,9 +24,43 @@ var CollectionView = Backbone.View.extend({
     }
   },
 
+  setup: function(document, params) {
+    this.requestedArtwork = parseInt(params);
+    var documentContent = document[0];
+    var galleryData = [];
+
+    var gallery = documentContent.getGroup('exhibition.artwork').toArray();
+    gallery.forEach(function(artwork) {
+      galleryData.push({
+        uri: encodeURI(artwork.getText('artwork-caption')),
+        image: artwork.getImage('artwork-image').url,
+        thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
+        caption: artwork.getText('artwork-caption'),
+        dimensionsX: artwork.getNumber('artwork-dimensions-x'),
+        dimensionsY: artwork.getNumber('artwork-dimensions-y'),
+        year: artwork.getText('artwork-year'),
+        availability: artwork.getBoolean('artwork-availability')
+      });
+    });
+
+    if (null === this._baseUrl) {
+      var currentRoute = Backbone.history.getFragment();
+      var n = currentRoute.indexOf(documentContent.id) + documentContent.id.length;
+      this._baseUrl = currentRoute.substring(0, n != -1 ? n : currentRoute.length);
+    }
+
+    return {
+      title: documentContent.getText('exhibition.collection-title'),
+      id: documentContent.id,
+      data: galleryData
+    };
+  },
+
   ready: function() {
-    var self = this;
+    CollectionView.__super__.ready.apply(this, arguments);
+
     this.setupModal();
+    this.$('[data-index="' + this.requestedArtwork + '"]').trigger('click');
   },
 
   setupModal: function() {
@@ -140,7 +123,7 @@ var CollectionView = Backbone.View.extend({
    * @param {jQuery} $item
    */
   positionGalleryCard: function($item) {
-    if ($item.find('.galleryImage')[0].hasAttribute('src')) {
+    if ($item && $item.find('.galleryImage')[0].hasAttribute('src')) {
       var image = $item.find('.galleryImage')[0];
       $item.find('.galleryCard').css({
         'padding-left': image.offsetLeft,
