@@ -11,6 +11,8 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/paper-ripple/src/css/paper-ripple.css" />
+    <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -24,44 +26,40 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="header">
-        <ul class="nav nav-pills float-right">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-          <li>
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li>
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-        <h3 class="text-muted">prismic webapp boilerplate</h3>
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+          <button class="paperRipple navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brigitte Henke</a>
+
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+              <li class="nav-item active">
+                <a class="nav-link paperRipple" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#malerei">Malerei</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#ausstellungen">Ausstellungen</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#atelier">Atelier</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#biographie">Biographie</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link paperRipple" href="#kontakt">Kontakt</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
       </div>
 
-      <div class="jumbotron">
-        <h1 class="display-3">'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your apps.</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>HTML5 Boilerplate</h4>
-          <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-
-          <h4>Sass</h4>
-          <p>Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.</p>
-
-          <h4>Bootstrap</h4>
-          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-        </div>
-      </div>
-
-      <div class="footer">
-        <p>♥ from the Yeoman team</p>
-      </div>
+      <div id="content"></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -71,7 +69,7 @@
       e=o.createElement(i);r=o.getElementsByTagName(i)[0];
       e.src='https://www.google-analytics.com/analytics.js';
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
+      ga('create','UA-91400477-1');ga('send','pageview');
     </script>
 
     <!-- build:js scripts/vendor.js -->
@@ -80,6 +78,11 @@
     <script src="/bower_components/tether/dist/js/tether.js"></script>
     <script src="/bower_components/underscore/underscore.js"></script>
     <script src="/bower_components/handlebars/handlebars.js"></script>
+    <script src="/bower_components/paper-ripple/dist/PaperRipple.js"></script>
+    <script src="/bower_components/backbone/backbone.js"></script>
+    <script src="/bower_components/slick-carousel/slick/slick.js"></script>
+    <script src="/bower_components/ev-emitter/ev-emitter.js"></script>
+    <script src="/bower_components/imagesloaded/imagesloaded.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -98,7 +101,12 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
+    <script src="scripts/view/HomeView.js"></script>
+    <script src="scripts/view/ExhibitionView.js"></script>
+    <script src="scripts/view/CollectionView.js"></script>
+    <script src="scripts/view/ContactView.js"></script>
     <script src="scripts/bundle.js"></script>
     <!-- endbuild -->
+
   </body>
 </html>

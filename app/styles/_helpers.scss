@@ -1,0 +1,13 @@
+@mixin keep-ratio($ratio) {
+  position: relative;
+  padding-bottom: $ratio * 100%;
+
+  > * {
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
