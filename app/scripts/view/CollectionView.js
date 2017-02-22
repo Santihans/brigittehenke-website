@@ -13,6 +13,7 @@ var CollectionView = Backbone.View.extend({
   initialize: function() {
     console.log('Collection View Initialized');
   },
+
   /**
    * @param {Object} document
    * @param {String} artworkId
@@ -27,7 +28,6 @@ var CollectionView = Backbone.View.extend({
       var currentRoute = Backbone.history.getFragment();
       var n = currentRoute.indexOf(documentContent.id) + documentContent.id.length;
       this._baseUrl = currentRoute.substring(0, n != -1 ? n : currentRoute.length);
-      this._closeModal();
     }
 
     $.get('templates/collection.html', function(data) {
@@ -59,7 +59,7 @@ var CollectionView = Backbone.View.extend({
     }, 'html').then(function() {
       self.ready();
 
-      if (artworkIndex > 0 && artworkIndex <= itemsCount) {
+      if (artworkIndex >= 0 && artworkIndex <= --itemsCount) {
         self.$('[data-index="' + artworkIndex + '"]').trigger('click');
       }
     });
@@ -77,6 +77,11 @@ var CollectionView = Backbone.View.extend({
 
   ready: function() {
     var self = this;
+    this.setupModal();
+  },
+
+  setupModal: function() {
+    var self = this;
     var $modal = this.$('#galleryModal');
 
     $modal.on('show.bs.modal', function(e) {
@@ -93,7 +98,6 @@ var CollectionView = Backbone.View.extend({
 
     $modal.on('hide.bs.modal', function(e) {
       self._destroySlick();
-      self._index = null;
       Backbone.history.navigate(self._baseUrl);
     });
   },
@@ -158,15 +162,11 @@ var CollectionView = Backbone.View.extend({
     });
   },
 
-  _closeModal: function() {
-    this._destroySlick();
-    this.$('#galleryModal').modal('hide');
-  },
-
   _destroySlick: function() {
     if (this._slick) {
       this._slick.slick('unslick').removeClass('carousel-visible');
       this._slick = null;
+      this._index = null;
     }
   }
 });
