@@ -85,8 +85,6 @@ var CollectionView = Backbone.View.extend({
 
     $modal.on('shown.bs.modal', function(e) {
       self.updateSlick();
-
-      self.$('#galleryCarousel').addClass('carousel-visible');
       self.$('.galleryImage').on('loaded', function() {
         $(this).siblings('.spinner').css('visibility', 'hidden');
         self.positionGalleryCard($(this).closest('.item'));
@@ -94,9 +92,7 @@ var CollectionView = Backbone.View.extend({
     });
 
     $modal.on('hide.bs.modal', function(e) {
-      self.$('#galleryCarousel').removeClass('carousel-visible');
-      self.getSlick().slick('unslick');
-      self._slick = null;
+      self._destroySlick();
       self._index = null;
       Backbone.history.navigate(self._baseUrl);
     });
@@ -109,8 +105,7 @@ var CollectionView = Backbone.View.extend({
       nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
       lazyLoad: 'ondemand',
       initialSlide: this._index
-    });
-
+    }).addClass('carousel-visible');
 
     this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
       image.trigger('loaded');
@@ -130,13 +125,6 @@ var CollectionView = Backbone.View.extend({
     });
 
     this.handleWindowResize();
-  },
-
-  /**
-   * @returns {Slick|null}
-   */
-  getSlick: function() {
-    return this._slick;
   },
 
   updateSlick: function() {
@@ -171,6 +159,14 @@ var CollectionView = Backbone.View.extend({
   },
 
   _closeModal: function() {
+    this._destroySlick();
     this.$('#galleryModal').modal('hide');
+  },
+
+  _destroySlick: function() {
+    if (this._slick) {
+      this._slick.slick('unslick').removeClass('carousel-visible');
+      this._slick = null;
+    }
   }
 });
