@@ -8,6 +8,10 @@ var AbstractView = Backbone.View.extend({
     this.updateNavigation();
   },
 
+  /**
+   * @param {Object} document
+   * @param {Object|String} [params]
+   */
   render: function(document, params) {
     var self = this;
     var templateVariables;
