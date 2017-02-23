@@ -2,12 +2,17 @@
 
 <ul class="exhibition row">
   {{#each data}}
-  <li class="exhibition-item-item col-sm-6 col-md-4 col-lg-3">
-    <a class="paperRipple" href="#malerei/{{id}}">
+  <li class="exhibition-item col-1 col-sm-6 col-md-4">
+    <a class="item paperRipple" href="#malerei/{{id}}">
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{title}}">
       </div>
-      <h3>{{title}}</h3>
+      <div class="item-info">
+        <h3>{{title}}</h3>
+      </div>
+      <div class="item-count">
+        {{artworkCount}}
+      </div>
     </a>
   </li>
   {{/each}}

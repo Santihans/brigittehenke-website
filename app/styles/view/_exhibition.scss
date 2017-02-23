@@ -2,10 +2,46 @@
   .exhibition {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 7.5px;
+
+    .exhibition-item {
+      margin-bottom: 15px;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+    }
 
     .ratio-helper {
       @include keep-ratio(1);
+    }
+
+    .item {
+      box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+      display: block;
+      color: $colorSubtle;
+
+      .item-info {
+        background-color: white;
+        bottom: 0;
+        font-size: .8em;
+        padding: 12px;
+        position: absolute;
+        width: 100%;
+
+        h3 {
+          font-size: 1.1em;
+          margin-bottom: 0;
+        }
+      }
+
+      .item-count {
+        background-color: white;
+        line-height: 36px;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        width: 36px;
+      }
     }
   }
 }
