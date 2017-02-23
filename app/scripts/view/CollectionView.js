@@ -72,12 +72,13 @@ var CollectionView = AbstractView.extend({
     });
 
     $modal.on('shown.bs.modal', function(e) {
-      self.updateSlick();
+
       self.$('.galleryImage').on('loaded', function() {
         $(this).siblings('.spinner').css('visibility', 'hidden');
         self.positionGalleryCard($(this).closest('.item'));
       });
       self.applyPaperRipple();
+      self.updateSlick();
     });
 
     $modal.on('hide.bs.modal', function(e) {
@@ -93,8 +94,9 @@ var CollectionView = AbstractView.extend({
       nextArrow: '<a href="javascript:;" class="paperRipple slick-next">&gt;</a>',
       lazyLoad: 'ondemand',
       initialSlide: this._index
-    }).addClass('carousel-visible');
-    
+    });
+    this._slick.addClass('carousel-visible');
+
     this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
       image.trigger('loaded');
     });
@@ -116,6 +118,7 @@ var CollectionView = AbstractView.extend({
   },
 
   updateSlick: function() {
+    this._slick.find('.slick-list').attr('tabindex', 0).focus();
     this._slick.slick('slickGoTo', this._index, true);
     this._slick.slick('setPosition');
   },
@@ -124,7 +127,7 @@ var CollectionView = AbstractView.extend({
    * @param {jQuery} $item
    */
   positionGalleryCard: function($item) {
-    if ($item && $item.find('.galleryImage')[0].hasAttribute('src')) {
+    if ($item.length && $item.find('.galleryImage')[0].hasAttribute('src')) {
       var image = $item.find('.galleryImage')[0];
       $item.find('.galleryCard').css({
         'padding-left': image.offsetLeft,
