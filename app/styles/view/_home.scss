@@ -1,15 +1,33 @@
 [data-view="home"] {
+  color: white;
+
   .header {
     background-color: transparent;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+    padding-bottom: 40px;
   }
 
   #navigation {
-    a {
+    > .logo {
       color: white;
+    }
+    .menuList .menuList-item a {
+      @include media-breakpoint-up(lg) {
+        color: white;
+      }
+    }
+
+    &:not(.offCanvas) .hamburger {
+      .hamburger-inner,
+      .hamburger-inner::before,
+      .hamburger-inner::after {
+        background-color: white;
+      }
     }
   }
 
   .wallpaper {
+    .wallpaper-image,
     .wallpaper-loading {
       height: 100%;
       left: 0;
@@ -18,9 +36,32 @@
       top: 0;
       width: 100%;
     }
+  }
 
-    .wallpaper-image {
-      display: none;
+  .welcome {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+    bottom: 0;
+    left: 0;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    position: fixed;
+    width: 100%;
+
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 1.3em;
+      margin-bottom: 1.2em;
+    }
+
+    .btn-home {
+      background-color: rgba(0, 0, 0, .2);
+      border-color: white;
+      color: white;
     }
   }
 }
