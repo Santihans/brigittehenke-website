@@ -2,16 +2,16 @@
 
 <ul class="exhibition row">
   {{#each data}}
-  <li class="exhibition-item col-6 col-md-4">
+  <li class="exhibition-item col-sm-6 col-md-4">
     <a class="item paperRipple" href="#malerei/{{id}}">
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{title}}">
       </div>
       <div class="item-info">
+        <div class="item-info-count">
+          {{artworkCount}}
+        </div>
         <h3>{{title}}</h3>
-      </div>
-      <div class="item-count">
-        {{artworkCount}}
       </div>
     </a>
   </li>
