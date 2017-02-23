@@ -1,6 +1,6 @@
 var ExhibitionView = AbstractView.extend({
 
-  template: 'exhibition',
+  viewTemplate: 'exhibition',
 
   setup: function(document) {
     var exhibitionData = [];

@@ -1,5 +1,5 @@
 var EventsView = AbstractView.extend({
 
-  template: 'events'
+  viewTemplate: 'events'
 
 });

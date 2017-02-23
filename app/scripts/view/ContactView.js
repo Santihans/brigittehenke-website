@@ -1,6 +1,6 @@
 var ContactView = AbstractView.extend({
 
-  template: 'contact',
+  viewTemplate: 'contact',
 
   setup: function(document) {
     var data = document[0];

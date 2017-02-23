@@ -1,6 +1,6 @@
 var BiographyView = AbstractView.extend({
 
-  template: 'biography',
+  viewTemplate: 'biography',
 
   setup: function(document) {
     var data = document[0];

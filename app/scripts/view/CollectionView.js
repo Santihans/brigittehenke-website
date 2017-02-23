@@ -1,6 +1,6 @@
 var CollectionView = AbstractView.extend({
 
-  template: 'collection',
+  viewTemplate: 'collection',
 
   /** @type {Number} */
   _requestedArtwork: null,

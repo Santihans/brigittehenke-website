@@ -1,6 +1,6 @@
 var HomeView = AbstractView.extend({
 
-  template: 'home',
+  viewTemplate: 'home',
 
   setup: function(document) {
     var documentData = document[0];

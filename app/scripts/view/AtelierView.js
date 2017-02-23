@@ -1,5 +1,5 @@
 var AtelierView = AbstractView.extend({
 
-  template: 'atelier'
+  viewTemplate: 'atelier'
 
 });
