@@ -2,14 +2,15 @@
 
 <ul class="collection row">
   {{#each data}}
-  <li class="collection-item col-sm-6 col-md-4 col-lg-3">
-    <a class="showImage paperRipple" href="javascript:;" data-index="{{@index}}" data-toggle="modal" data-target="#galleryModal">
+  <li class="collection-item col-6 col-sm-4 col-md-3">
+    <a class="item showImage paperRipple" href="javascript:;" data-index="{{@index}}" data-toggle="modal" data-target="#galleryModal">
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{caption}}">
       </div>
-      <h3 class="text-truncate">{{caption}}</h3>
-      <div>{{dimensionsX}}x{{dimensionsY}}</div>
-      <div>Jahr: {{year}}</div>
+      <div class="item-info">
+        <h3 class="text-truncate">{{caption}}</h3>
+        <div>{{year}}</div>
+      </div>
     </a>
   </li>
   {{/each}}

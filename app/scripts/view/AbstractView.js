@@ -1,10 +1,11 @@
 var AbstractView = Backbone.View.extend({
   el: "#content",
 
-  template: 'test',
+  template: 'default',
 
   initialize: function() {
     console.log('View Initialized');
+    this.updateNavigation();
   },
 
   render: function(document, params) {
@@ -34,8 +35,14 @@ var AbstractView = Backbone.View.extend({
     this.applyPaperRipple();
   },
 
+  updateNavigation: function() {
+    $('body').attr('data-view', this.template);
+    $('[data-href]').removeClass('active');
+    $('[data-href*="' + this.template + '"]').addClass('active');
+  },
+
   applyPaperRipple: function() {
-    var buttons = document.querySelectorAll('.paperRipple');
+    var buttons = this.el.querySelectorAll('.paperRipple');
 
     // Traversing the buttons
     [].forEach.call(buttons, function(button) {

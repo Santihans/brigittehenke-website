@@ -1,12 +1,17 @@
 // bower:scss
 @import "bower_components/bootstrap/scss/bootstrap.scss";
 @import "bower_components/slick-carousel/slick/slick.scss";
+@import "bower_components/css-hamburgers/_sass/hamburgers/hamburgers.scss";
 // endbower
 @import "variables";
 @import "helpers";
 @import "layout";
 @import "paperRipple";
 @import "spinner";
+// Views
+@import "view/collection";
+@import "view/exhibition";
+@import "view/home";
 
 .browserupgrade {
   margin: 0.2em 0;
@@ -15,190 +20,112 @@
   padding: 0.2em 0;
 }
 
-/* Space out content a bit */
 body {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 70px;
 }
 
 .container-fluid {
   max-width: 1000px;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.footer {
-  padding-right: 15px;
-  padding-left: 15px;
+.header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  position: fixed;
+  z-index: 10;
 }
 
-/* Custom page header */
-.header {
-  padding-bottom: 1rem;
+#navigation {
+  align-items: center;
+  display: flex;
+  font-size: 1.1rem;
+
+  .hamburger {
+    order: 3;
+    line-height: 1;
+    z-index: 1;
+  }
+
+  .logo {
+    font-weight: bold;
+    margin-right: auto;
+    padding: 15px;
+  }
+
+  .menuList {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .menuList-item {
+      border: 1px solid transparent;
+
+      a {
+        display: block;
+        padding: 12px;
+        color: $colorSubtle;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .menu {
+      background-color: white;
+      box-shadow: -2px 0 9px rgba(0, 0, 0, .15);
+      height: 100%;
+      padding-left: 15px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      transform: translateX(110%);
+      transition: transform 200ms;
+      width: 240px;
+
+      html.offCanvas & {
+        transform: translateX(0);
+      }
+
+      .menuList {
+        margin-top: 70px;
+        flex-direction: column;
+
+        .menuList-item {
+          &.active {
+            border-left-color: $colorSubtle;
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    > .logo {
+      margin-right: 40px;
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    .menu {
+      position: static;
+
+      .menuList-item {
+        &.active {
+          border-top-color: $colorSubtle;
+        }
+      }
+    }
+  }
 }
 
 #content {
   > h1 {
     margin: 0 15px 10px;
-    font-size: 1.2em;
+    font-size: .9em;
     color: $colorSubtle;
-  }
-}
-
-.exhibition, .collection {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  .ratio-helper {
-    @include keep-ratio(1);
-  }
-}
-
-.exhibition {
-  .gallery {
-    display: block;
-    text-decoration: none;
-
-    img {
-      display: block;
-    }
-  }
-
-}
-
-.collection {
-  .collection-item {
-    h3 {
-      font-size: 1.1em;
-      margin-bottom: .1em;
-    }
-  }
-}
-
-#galleryModal {
-  .modal-dialog {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-
-    @include media-breakpoint-up(sm) {
-      max-width: none;
-    }
-  }
-
-  .modal-content {
-    border: 0;
-    border-radius: 0;
-    height: auto;
-    min-height: 100%;
-
-    > .close {
-      padding: 5px 7px;
-      position: absolute;
-      right: 0;
-      z-index: 1;
-    }
-  }
-}
-
-#galleryCarousel {
-  opacity: 0;
-  transition: opacity 200ms 200ms;
-
-  &.carousel-visible {
-    opacity: 1;
-  }
-
-  .slick-prev, .slick-next {
-    font-size: 16px;
-    line-height: 50px;
-    position: absolute;
-    text-align: center;
-    bottom: 0;
-    width: 50px;
-    z-index: 1;
-  }
-
-  .slick-prev {
-    left: 0;
-  }
-
-  .slick-next {
-    right: 0;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 5vw;
-    width: 100vw;
-
-    &.card-visible {
-      .item-info {
-        opacity: 1;
-      }
-    }
-
-    .item-image {
-      align-items: center;
-      display: flex;
-      flex: 1 1 auto;
-      justify-content: center;
-      position: relative;
-
-      .galleryImage {
-        max-height: 100%;
-        opacity: 0;
-        position: absolute;
-        transition: opacity 200ms;
-      }
-    }
-
-    .item-info {
-      flex: 0 0 auto;
-      font-size: .8em;
-      opacity: 0;
-      padding: 12px 0;
-      transition: opacity 200ms 100ms;
-
-      .galleryCard {
-        color: $colorSubtle;
-        position: relative;
-
-        h4 {
-          color: $colorFg;
-          font-size: 1.2em;
-          margin-bottom: .2em;
-          word-break: break-all;
-        }
-
-        .sold {
-          float: right;
-          color: inherit;
-
-          &.legend-visible {
-            .sold-legend {
-              opacity: 1;
-            }
-          }
-
-          .sold-dot {
-            color: $colorSold;
-            padding: 0 5px;
-          }
-
-          .sold-legend {
-            font-size: .8em;
-            opacity: 0;
-            transition: opacity 200ms;
-            transform: translateX(-10px);
-          }
-        }
-      }
-    }
   }
 }

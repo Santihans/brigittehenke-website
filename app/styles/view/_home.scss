@@ -1,0 +1,26 @@
+[data-view="home"] {
+  .header {
+    background-color: transparent;
+  }
+
+  #navigation {
+    a {
+      color: white;
+    }
+  }
+
+  .wallpaper {
+    .wallpaper-loading {
+      height: 100%;
+      left: 0;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    .wallpaper-image {
+      display: none;
+    }
+  }
+}
