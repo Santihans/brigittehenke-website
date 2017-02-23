@@ -15,11 +15,11 @@ var CollectionView = AbstractView.extend({
   _baseUrl: null,
 
   events: {
-    "click .showImage": function(event) {
+    'click .showImage': function(event) {
       this._index = $(event.currentTarget).attr('data-index');
     },
 
-    "click .showLegend": function(event) {
+    'click .showLegend': function(event) {
       this.$(event.currentTarget).toggleClass('legend-visible')
     }
   },
@@ -31,15 +31,18 @@ var CollectionView = AbstractView.extend({
 
     var gallery = documentContent.getGroup('exhibition.artwork').toArray();
     gallery.forEach(function(artwork) {
+      var dimensions = null;
+      if (artwork.getNumber('artwork-dimensions-x') && artwork.getNumber('artwork-dimensions-x')) {
+        dimensions = {x: artwork.getNumber('artwork-dimensions-x'), y: artwork.getNumber('artwork-dimensions-y')}
+      }
       galleryData.push({
         uri: encodeURI(artwork.getText('artwork-caption')),
         image: artwork.getImage('artwork-image').url,
         thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
         caption: artwork.getText('artwork-caption'),
-        dimensionsX: artwork.getNumber('artwork-dimensions-x'),
-        dimensionsY: artwork.getNumber('artwork-dimensions-y'),
+        dimensions: dimensions,
         year: artwork.getText('artwork-year'),
-        availability: artwork.getBoolean('artwork-availability')
+        sold: (artwork.getText('artwork-availability') && artwork.getText('artwork-availability').toLowerCase() == 'yes')
       });
     });
 

@@ -11,8 +11,7 @@ var ExhibitionView = AbstractView.extend({
         title: collection.getText('exhibition.collection-title'),
         id: collection.id,
         description: collection.getText('exhibition.collection-description'),
-        image: collection.getImage('exhibition.collection-image').url,
-        thumbnail: collection.getImageView('exhibition.collection-image', 'collection-thumb').url,
+        thumbnail: collection.getImageView('exhibition.collection-image', 'collection-thumb') ? collection.getImageView('exhibition.collection-image', 'collection-thumb').url : 'images/placeholder.jpg',
         artworkCount: collection.getGroup('exhibition.artwork').value.length
       });
     });

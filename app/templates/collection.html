@@ -31,9 +31,9 @@
           </div>
           <div class="item-info">
             <div class="galleryCard">
-              <h4>{{caption}}{{#if availability}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}
+              <h4>{{caption}}{{#if sold}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}
               </h4>
-              <div>{{dimensionsX}}x{{dimensionsY}}</div>
+              <div>{{#if dimensions}}{{dimensions.x}}x{{dimensions.y}}{{/if}}</div>
               <div>{{year}}</div>
             </div>
           </div>

@@ -1,11 +1,11 @@
 var NavigationView = AbstractView.extend({
-  el: "#navigation",
+  el: '#navigation',
 
   events: {
-    "click .hamburger": function(event) {
+    'click .hamburger': function(event) {
       this.toggleOffCanvasNavigation();
     },
-    "click .navigation-overlay": function() {
+    'click .navigation-overlay': function() {
       this.toggleOffCanvasNavigation();
     }
   },

@@ -17,7 +17,7 @@ var HomeView = AbstractView.extend({
   },
 
   _lazyLoadWallpaper: function() {
-    var el = document.querySelector(".wallpaper-image[data-src]");
+    var el = document.querySelector('.wallpaper-image[data-src]');
     el.setAttribute('src', el.getAttribute('data-src'));
     el.onload = function() {
       el.removeAttribute('data-src');

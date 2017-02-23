@@ -1,5 +1,5 @@
 var AbstractView = Backbone.View.extend({
-  el: "#content",
+  el: '#content',
 
   /** @type {String} */
   viewTemplate: 'default',
