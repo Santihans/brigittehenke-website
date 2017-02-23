@@ -9,10 +9,11 @@
 @import "paperRipple";
 @import "spinner";
 // Views
-@import "view/navigation";
 @import "view/collection";
+@import "view/contact";
 @import "view/exhibition";
 @import "view/home";
+@import "view/navigation";
 
 .browserupgrade {
   margin: 0.2em 0;
@@ -31,6 +32,11 @@ body {
   padding-right: 0;
 }
 
+.content-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .header {
   top: 0;
   left: 0;
@@ -42,7 +48,8 @@ body {
 
 #content {
   > h1 {
-    margin: 0 15px 10px;
+    margin-bottom: 10px;
+    padding: 0 15px;
     font-size: .9em;
     color: $colorSubtle;
   }
