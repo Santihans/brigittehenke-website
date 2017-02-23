@@ -27,8 +27,8 @@
   }
 
   .wallpaper {
-    .wallpaper-image,
-    .wallpaper-loading {
+    .wallpaper-image {
+      background-size: cover;
       height: 100%;
       left: 0;
       object-fit: cover;

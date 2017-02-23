@@ -13,5 +13,14 @@ var HomeView = AbstractView.extend({
 
   ready: function() {
     HomeView.__super__.ready.apply(this, arguments);
+    this._lazyLoadWallpaper();
+  },
+
+  _lazyLoadWallpaper: function() {
+    var el = document.querySelector(".wallpaper-image[data-src]");
+    el.setAttribute('src', el.getAttribute('data-src'));
+    el.onload = function() {
+      el.removeAttribute('data-src');
+    }
   }
 });
