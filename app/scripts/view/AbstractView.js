@@ -1,11 +1,15 @@
 var AbstractView = Backbone.View.extend({
   el: "#content",
 
+  /** @type {String} */
   viewTemplate: 'default',
+
+  /** @type {jQuery} */
+  $body: null,
 
   initialize: function() {
     console.log('View Initialized');
-
+    this.$body = $('body');
     this.updateNavigation();
   },
 
@@ -41,9 +45,9 @@ var AbstractView = Backbone.View.extend({
   },
 
   updateNavigation: function() {
-    $('body').attr('data-view', this.viewTemplate);
-    $('#navigation [data-href]').removeClass('active');
-    $('#navigation [data-href*="' + this.viewTemplate + '"]').addClass('active');
+    this.$body.attr('data-view', this.viewTemplate);
+    this.$body.find('#navigation [data-href]').removeClass('active');
+    this.$body.find('#navigation [data-href*="' + this.viewTemplate + '"]').addClass('active');
   },
 
   applyPaperRipple: function() {
