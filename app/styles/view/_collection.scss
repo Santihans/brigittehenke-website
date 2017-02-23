@@ -113,10 +113,27 @@
         justify-content: center;
         position: relative;
 
+        .image-wrapper {
+          align-items: center;
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
+
+          .spinner {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
         .galleryImage {
           max-height: 100%;
           opacity: 0;
-          position: absolute;
           transition: opacity 200ms;
         }
       }

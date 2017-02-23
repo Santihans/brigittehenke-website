@@ -26,8 +26,10 @@
         {{#each data}}
         <div class="item">
           <div class="item-image">
-            <div class="spinner"></div>
-            <img class="galleryImage d-block img-fluid" data-lazy="{{image}}" alt="{{caption}}">
+            <div class="image-wrapper">
+              <div class="spinner"></div>
+              <img class="galleryImage d-block img-fluid" data-lazy="{{image}}" alt="{{caption}}">
+            </div>
           </div>
           <div class="item-info">
             <div class="galleryCard">
