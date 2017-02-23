@@ -10,7 +10,8 @@ var AbstractView = Backbone.View.extend({
   initialize: function() {
     console.log('View Initialized');
     this.$body = $('body');
-    this.updateNavigation();
+    this._updateNavigation();
+    this._headerShadow();
   },
 
   /**
@@ -44,12 +45,6 @@ var AbstractView = Backbone.View.extend({
     this.applyPaperRipple();
   },
 
-  updateNavigation: function() {
-    this.$body.attr('data-view', this.viewTemplate);
-    this.$body.find('#navigation [data-href]').removeClass('active');
-    this.$body.find('#navigation [data-href*="' + this.viewTemplate + '"]').addClass('active');
-  },
-
   applyPaperRipple: function() {
     var buttons = this.el.querySelectorAll('.paperRipple');
 
@@ -75,5 +70,21 @@ var AbstractView = Backbone.View.extend({
         ripple.upAction();
       });
     });
+  },
+
+  _updateNavigation: function() {
+    this.$body.attr('data-view', this.viewTemplate);
+    this.$body.find('#navigation [data-href]').removeClass('active');
+    this.$body.find('#navigation [data-href*="' + this.viewTemplate + '"]').addClass('active');
+  },
+
+  _headerShadow: function() {
+    var self = this;
+    var $element = $(document);
+    $element.on('scroll.scrollShadow', _.throttle(function() {
+      var scrollTop = $element.scrollTop();
+      self.$body.find('.header').toggleClass('header-shadow', scrollTop != 0);
+    }, 200));
   }
+
 });
