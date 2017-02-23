@@ -48,8 +48,9 @@ var AppRouter = Backbone.Router.extend({
   },
 
   biographyRoute: function() {
+    var query = ['document.type', 'biography'];
     var view = new BiographyView();
-    this._prepareView(view);
+    this._prepareView(view, query);
   },
 
   contactRoute: function() {
