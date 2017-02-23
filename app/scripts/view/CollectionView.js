@@ -77,6 +77,7 @@ var CollectionView = AbstractView.extend({
         $(this).siblings('.spinner').css('visibility', 'hidden');
         self.positionGalleryCard($(this).closest('.item'));
       });
+      self.applyPaperRipple();
     });
 
     $modal.on('hide.bs.modal', function(e) {
@@ -88,12 +89,12 @@ var CollectionView = AbstractView.extend({
   setupSlick: function() {
     var self = this;
     this._slick = this.$('#galleryCarousel').slick({
-      prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
-      nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
+      prevArrow: '<a href="javascript:;" class="paperRipple slick-prev">&lt;</a>',
+      nextArrow: '<a href="javascript:;" class="paperRipple slick-next">&gt;</a>',
       lazyLoad: 'ondemand',
       initialSlide: this._index
     }).addClass('carousel-visible');
-
+    
     this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
       image.trigger('loaded');
     });

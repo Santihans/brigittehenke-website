@@ -50,6 +50,11 @@ var AbstractView = Backbone.View.extend({
 
     // Traversing the buttons
     [].forEach.call(buttons, function(button) {
+
+      if (this.$(button).find('.paper-ripple').length != 0) {
+        return
+      }
+      
       // New PaperRipple for the button
       var ripple = new PaperRipple();
 
