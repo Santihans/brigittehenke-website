@@ -3,8 +3,10 @@ var NavigationView = AbstractView.extend({
 
   events: {
     "click .hamburger": function(event) {
-      this.$(event.currentTarget).toggleClass('is-active');
-      $('html').toggleClass('offCanvas');
+      this.toggleOffCanvasNavigation();
+    },
+    "click .navigation-overlay": function() {
+      this.toggleOffCanvasNavigation();
     }
   },
 
@@ -13,10 +15,22 @@ var NavigationView = AbstractView.extend({
     this.ready();
   },
 
-
   ready: function() {
-    var self = this;
     NavigationView.__super__.ready.apply(this, arguments);
-  }
+    var self = this;
 
+    Backbone.history.on('route', function(){
+      self.closeOffCanvasNavigation();
+    })
+  },
+
+  toggleOffCanvasNavigation: function() {
+    this.$('.hamburger').toggleClass('is-active');
+    this.$el.toggleClass('offCanvas');
+  },
+
+  closeOffCanvasNavigation: function() {
+    this.$('.hamburger').removeClass('is-active');
+    this.$el.removeClass('offCanvas');
+  }
 });

@@ -37,8 +37,8 @@ var AbstractView = Backbone.View.extend({
 
   updateNavigation: function() {
     $('body').attr('data-view', this.template);
-    $('[data-href]').removeClass('active');
-    $('[data-href*="' + this.template + '"]').addClass('active');
+    $('#navigation [data-href]').removeClass('active');
+    $('#navigation [data-href*="' + this.template + '"]').addClass('active');
   },
 
   applyPaperRipple: function() {

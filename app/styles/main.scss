@@ -9,6 +9,7 @@
 @import "paperRipple";
 @import "spinner";
 // Views
+@import "view/navigation";
 @import "view/collection";
 @import "view/exhibition";
 @import "view/home";
@@ -25,7 +26,9 @@ body {
 }
 
 .container-fluid {
-  max-width: 1000px;
+  max-width: 950px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .header {
@@ -35,91 +38,6 @@ body {
   background-color: white;
   position: fixed;
   z-index: 10;
-}
-
-#navigation {
-  align-items: center;
-  display: flex;
-  font-size: 1.1rem;
-
-  .hamburger {
-    order: 3;
-    line-height: 1;
-    z-index: 1;
-  }
-
-  .logo {
-    font-weight: bold;
-    margin-right: auto;
-    padding: 15px;
-  }
-
-  .menuList {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    .menuList-item {
-      border: 1px solid transparent;
-
-      a {
-        display: block;
-        padding: 12px;
-        color: $colorSubtle;
-      }
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    .menu {
-      background-color: white;
-      box-shadow: -2px 0 9px rgba(0, 0, 0, .15);
-      height: 100%;
-      padding-left: 15px;
-      position: fixed;
-      right: 0;
-      top: 0;
-      transform: translateX(110%);
-      transition: transform 200ms;
-      width: 240px;
-
-      html.offCanvas & {
-        transform: translateX(0);
-      }
-
-      .menuList {
-        margin-top: 70px;
-        flex-direction: column;
-
-        .menuList-item {
-          &.active {
-            border-left-color: $colorSubtle;
-          }
-        }
-      }
-    }
-  }
-
-  @include media-breakpoint-up(lg) {
-    > .logo {
-      margin-right: 40px;
-    }
-
-    .hamburger {
-      display: none;
-    }
-
-    .menu {
-      position: static;
-
-      .menuList-item {
-        &.active {
-          border-top-color: $colorSubtle;
-        }
-      }
-    }
-  }
 }
 
 #content {

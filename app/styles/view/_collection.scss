@@ -2,10 +2,12 @@
   .collection {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 7.5px;
 
     .collection-item {
       margin-bottom: 15px;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
     }
 
     .ratio-helper {
