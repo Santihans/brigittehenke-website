@@ -12,6 +12,7 @@ var AbstractView = Backbone.View.extend({
     this.$body = $('body');
     this._updateNavigation();
     this._headerShadow();
+    this.$body.addClass('page-loading');
   },
 
   /**
@@ -29,6 +30,10 @@ var AbstractView = Backbone.View.extend({
     }, 'html')
       .then(function() {
         self.ready();
+        _.delay(function(){
+          self.$body.removeClass('page-loading');
+        }, 100);
+
       });
   },
 

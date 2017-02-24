@@ -3,6 +3,14 @@
   display: flex;
   font-size: 1.1rem;
 
+  @include media-breakpoint-up(lg) {
+    font-size: 1.2em;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: 1.4em;
+  }
+
   .navigation-overlay {
     background-color: rgba(0, 0, 0, .2);
     height: 100%;
