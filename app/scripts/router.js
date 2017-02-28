@@ -43,8 +43,9 @@ var AppRouter = Backbone.Router.extend({
   },
 
   atelierRoute: function() {
+    var query = ['document.type', 'atelier'];
     var view = new AtelierView();
-    this._prepareView(view);
+    this._prepareView(view, query);
   },
 
   biographyRoute: function() {
