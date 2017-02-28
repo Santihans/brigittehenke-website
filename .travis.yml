@@ -1,0 +1,19 @@
+sudo: false
+language: node_js
+node_js:
+  - node
+
+before_install:
+  - npm install --global gulp-cli bower
+
+install:
+  - npm install
+  - bower install
+
+script: gulp
+
+deploy:
+  - provider: script
+    script: gulp deploy --host $HOST --user $USERNAME --password $PASSWORD
+    on:
+      branch: release

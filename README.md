@@ -15,6 +15,7 @@ Fork from https://github.com/Santihans/prismic-webapp-boilerplate
 - Run `gulp serve:test` to run the tests in the browser
 - Run `gulp` to build your webapp for production
 - Run `gulp serve:dist` to preview the production build
+- Run `gulp deploy --host 'host' --user 'username' --password 'password'` to deploy using ftp 
 
 ## License
 
