@@ -209,6 +209,6 @@ gulp.task('deploy', function() {
     log: gutil.log
   });
   gulp.src(['dist/**/*'])
-    .pipe(conn.rmdir(remotePath, '.', {base: remotePath}))
+    .pipe(conn.clean(remotePath, '.', {base: remotePath}))
     .pipe(conn.dest(remotePath));
 });
