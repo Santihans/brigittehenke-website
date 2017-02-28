@@ -12,5 +12,8 @@ install:
 
 script: gulp
 
-after_success:
-  - gulp deploy --host $HOST --user $USERNAME --password $PASSWORD
+deploy:
+  - provider: script
+    script: gulp deploy --host $HOST --user $USERNAME --password $PASSWORD
+    on:
+      branch: release
