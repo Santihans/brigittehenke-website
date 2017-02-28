@@ -1,9 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - v6
-  - v5
-  - v4
+  - node
 
 before_install:
   - npm install --global gulp-cli bower
@@ -15,4 +13,4 @@ install:
 script: gulp
 
 after_success:
-  - gulp deploy --host HOST --user USERNAME --password PASSWORD
+  - gulp deploy --host $HOST --user $USERNAME --password $PASSWORD
