@@ -208,7 +208,14 @@ gulp.task('deploy', function() {
     password: args.password,
     log: gutil.log
   });
-  gulp.src(['dist/**/*'])
-    .pipe(conn.rmdir(remotePath, callback))
-    .pipe(conn.dest(remotePath));
+
+  conn.rmdir( remotePath, function (err) {
+    gulp.src(['dist/**/*'], {buffer: false})
+      .pipe(conn.newer(remotePath))
+      .pipe(conn.dest(remotePath));
+
+    if (err) {
+      console.log(err);
+    }
+  });
 });
