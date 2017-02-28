@@ -1,14 +1,26 @@
-var HomeView = Backbone.View.extend({
-  el: "#content",
-  initialize: function() {
-    console.log('Home View Initialized');
-  },
-  render: function() {
-    var self = this;
-    $.get('templates/home.html', function(data) {
-      var template = Handlebars.compile(data);
-      self.$el.html(template({test: "yo"}));
-    }, 'html');
-  }
+var HomeView = AbstractView.extend({
 
+  viewTemplate: 'home',
+
+  setup: function(document) {
+    var documentData = document[0];
+    return {
+      description: documentData.getText('home.tagline'),
+      image: documentData.getImageView('home.wallpaper', 'wallpaper-main').url,
+      thumbnail: documentData.getImageView('home.wallpaper', 'wallpaper-loading').url
+    };
+  },
+
+  ready: function() {
+    HomeView.__super__.ready.apply(this, arguments);
+    this._lazyLoadWallpaper();
+  },
+
+  _lazyLoadWallpaper: function() {
+    var el = document.querySelector('.wallpaper-image[data-src]');
+    el.setAttribute('src', el.getAttribute('data-src'));
+    el.onload = function() {
+      el.removeAttribute('data-src');
+    }
+  }
 });

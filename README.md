@@ -9,11 +9,6 @@ Fork from https://github.com/Santihans/prismic-webapp-boilerplate
 - Install node packages: `npm install`
 - Install bower packages: `bower install`
 
-## Prismic.io
-- Signup at [Prismic.io](https://prismic.io/), create documents and publish them. 
-- Adjust `/app/config.json`
-- Adjust prismic query in `/app/main.js`
-
 ## Run App
 - Run `gulp serve` to preview and watch for changes
 - Run `bower install --save <package>` to install frontend dependencies

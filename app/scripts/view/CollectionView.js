@@ -1,5 +1,9 @@
-var CollectionView = Backbone.View.extend({
-  el: "#content",
+var CollectionView = AbstractView.extend({
+
+  viewTemplate: 'collection',
+
+  /** @type {Number} */
+  _requestedArtwork: null,
 
   /** @type {Object} */
   _slick: null,
@@ -10,19 +14,37 @@ var CollectionView = Backbone.View.extend({
   /** @type {String} */
   _baseUrl: null,
 
-  initialize: function() {
-    console.log('Collection View Initialized');
+  events: {
+    'click .showImage': function(event) {
+      this._index = $(event.currentTarget).attr('data-index');
+    },
+
+    'click .showLegend': function(event) {
+      this.$(event.currentTarget).toggleClass('legend-visible')
+    }
   },
 
-  /**
-   * @param {Object} document
-   * @param {String} artworkId
-   */
-  render: function(document, artworkId) {
-    var self = this;
-    var itemsCount;
-    var artworkIndex = parseInt(artworkId);
+  setup: function(document, params) {
+    this.requestedArtwork = parseInt(params);
     var documentContent = document[0];
+    var galleryData = [];
+
+    var gallery = documentContent.getGroup('exhibition.artwork').toArray();
+    gallery.forEach(function(artwork) {
+      var dimensions = null;
+      if (artwork.getNumber('artwork-dimensions-x') && artwork.getNumber('artwork-dimensions-x')) {
+        dimensions = {x: artwork.getNumber('artwork-dimensions-x'), y: artwork.getNumber('artwork-dimensions-y')}
+      }
+      galleryData.push({
+        uri: encodeURI(artwork.getText('artwork-caption')),
+        image: artwork.getImage('artwork-image').url,
+        thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
+        caption: artwork.getText('artwork-caption'),
+        dimensions: dimensions,
+        year: artwork.getText('artwork-year'),
+        sold: (artwork.getText('artwork-availability') && artwork.getText('artwork-availability').toLowerCase() == 'yes')
+      });
+    });
 
     if (null === this._baseUrl) {
       var currentRoute = Backbone.history.getFragment();
@@ -30,54 +52,18 @@ var CollectionView = Backbone.View.extend({
       this._baseUrl = currentRoute.substring(0, n != -1 ? n : currentRoute.length);
     }
 
-    $.get('templates/collection.html', function(data) {
-      var template = Handlebars.compile(data);
-      var galleryData = [];
-
-      var gallery = documentContent.getGroup('exhibition.artwork').toArray();
-      itemsCount = gallery.length;
-      gallery.forEach(function(artwork) {
-        galleryData.push({
-          uri: encodeURI(artwork.getText('artwork-caption')),
-          image: artwork.getImage('artwork-image').url,
-          thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
-          caption: artwork.getText('artwork-caption'),
-          dimensionsX: artwork.getNumber('artwork-dimensions-x'),
-          dimensionsY: artwork.getNumber('artwork-dimensions-y'),
-          year: artwork.getText('artwork-year'),
-          availability: artwork.getBoolean('artwork-availability')
-        });
-      });
-
-      var templateVariables = {
-        title: documentContent.getText('exhibition.collection-title'),
-        id: documentContent.id,
-        data: galleryData
-      };
-
-      self.$el.html(template(templateVariables));
-    }, 'html').then(function() {
-      self.ready();
-
-      if (artworkIndex >= 0 && artworkIndex <= --itemsCount) {
-        self.$('[data-index="' + artworkIndex + '"]').trigger('click');
-      }
-    });
-  },
-
-  events: {
-    "click .showImage": function(event) {
-      this._index = $(event.currentTarget).attr('data-index');
-    },
-
-    "click .showLegend": function(event) {
-      this.$(event.currentTarget).toggleClass('legend-visible')
-    }
+    return {
+      title: documentContent.getText('exhibition.collection-title'),
+      id: documentContent.id,
+      data: galleryData
+    };
   },
 
   ready: function() {
-    var self = this;
+    CollectionView.__super__.ready.apply(this, arguments);
+
     this.setupModal();
+    this.$('[data-index="' + this.requestedArtwork + '"]').trigger('click');
   },
 
   setupModal: function() {
@@ -89,11 +75,13 @@ var CollectionView = Backbone.View.extend({
     });
 
     $modal.on('shown.bs.modal', function(e) {
-      self.updateSlick();
+
       self.$('.galleryImage').on('loaded', function() {
         $(this).siblings('.spinner').css('visibility', 'hidden');
         self.positionGalleryCard($(this).closest('.item'));
       });
+      self.applyPaperRipple();
+      self.updateSlick();
     });
 
     $modal.on('hide.bs.modal', function(e) {
@@ -105,11 +93,12 @@ var CollectionView = Backbone.View.extend({
   setupSlick: function() {
     var self = this;
     this._slick = this.$('#galleryCarousel').slick({
-      prevArrow: '<a href="javascript:;" class="slick-prev">&lt;</a>',
-      nextArrow: '<a href="javascript:;" class="slick-next">&gt;</a>',
+      prevArrow: '<a href="javascript:;" class="paperRipple slick-prev">&lt;</a>',
+      nextArrow: '<a href="javascript:;" class="paperRipple slick-next">&gt;</a>',
       lazyLoad: 'ondemand',
       initialSlide: this._index
-    }).addClass('carousel-visible');
+    });
+    this._slick.addClass('carousel-visible');
 
     this._slick.on('lazyLoaded', function(event, slick, image, imageSource) {
       image.trigger('loaded');
@@ -132,6 +121,7 @@ var CollectionView = Backbone.View.extend({
   },
 
   updateSlick: function() {
+    this._slick.find('.slick-list').attr('tabindex', 0).focus();
     this._slick.slick('slickGoTo', this._index, true);
     this._slick.slick('setPosition');
   },
@@ -140,7 +130,7 @@ var CollectionView = Backbone.View.extend({
    * @param {jQuery} $item
    */
   positionGalleryCard: function($item) {
-    if ($item.find('.galleryImage')[0].hasAttribute('src')) {
+    if ($item.length && $item.find('.galleryImage')[0].hasAttribute('src')) {
       var image = $item.find('.galleryImage')[0];
       $item.find('.galleryCard').css({
         'padding-left': image.offsetLeft,

@@ -2,12 +2,16 @@
 <html lang="">
   <head>
     <meta charset="utf-8">
-    <meta name="description" content="">
+    <meta name="description" content="Brigitte Henke, Malerei, Kunst, Künstlerin, Schweiz, Röschenz">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>prismic webapp boilerplate</title>
+    <title>Brigitte Henke</title>
 
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5e5e5e">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -21,55 +25,66 @@
     <!-- endbuild -->
 
   </head>
-  <body>
+  <body data-view="home">
     <!--[if IE]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please
+      <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="container-fluid">
-      <div class="header">
-        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-          <button class="paperRipple navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <div class="header">
+      <div class="container-fluid">
+        <nav id="navigation" class="navigation">
+          <div class="navigation-overlay"></div>
+          <button class="hamburger hamburger--squeeze paperRipple" type="button" aria-label="Menu" aria-controls="navigation">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
           </button>
-          <a class="navbar-brand" href="#">Brigitte Henke</a>
-
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-              <li class="nav-item active">
-                <a class="nav-link paperRipple" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="logo paperRipple" href="#">Brigitte Henke</a>
+          <div class="menu">
+            <ul class="menuList">
+              <li class="menuList-item" data-href="home">
+                <a class="paperRipple" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link paperRipple" href="#malerei">Malerei</a>
+              <li class="menuList-item" data-href="exhibition, collection">
+                <a class="paperRipple" href="#malerei">Malerei</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link paperRipple" href="#ausstellungen">Ausstellungen</a>
+              <li class="menuList-item" data-href="events">
+                <a class="paperRipple" href="#ausstellungen">Ausstellungen</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link paperRipple" href="#atelier">Atelier</a>
+              <li class="menuList-item" data-href="atelier">
+                <a class="paperRipple" href="#atelier">Atelier</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link paperRipple" href="#biographie">Biographie</a>
+              <li class="menuList-item" data-href="biography">
+                <a class="paperRipple" href="#biographie">Biographie</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link paperRipple" href="#kontakt">Kontakt</a>
+              <li class="menuList-item" data-href="contact">
+                <a class="paperRipple" href="#kontakt">Kontakt</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
-
+    </div>
+    <div class="container-fluid">
       <div id="content"></div>
     </div>
-
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-91400477-1');ga('send','pageview');
+      (function(b, o, i, l, e, r) {
+        b.GoogleAnalyticsObject = l;
+        b[l] || (b[l] =
+          function() {
+            (b[l].q = b[l].q || []).push(arguments)
+          });
+        b[l].l = +new Date;
+        e = o.createElement(i);
+        r = o.getElementsByTagName(i)[0];
+        e.src = 'https://www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e, r)
+      }(window, document, 'script', 'ga'));
+      ga('create', 'UA-91400477-1');
+      ga('send', 'pageview');
     </script>
 
     <!-- build:js scripts/vendor.js -->
@@ -101,10 +116,15 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
-    <script src="scripts/view/HomeView.js"></script>
-    <script src="scripts/view/ExhibitionView.js"></script>
+    <script src="scripts/view/AbstractView.js"></script>
+    <script src="scripts/view/AtelierView.js"></script>
+    <script src="scripts/view/BiographyView.js"></script>
     <script src="scripts/view/CollectionView.js"></script>
     <script src="scripts/view/ContactView.js"></script>
+    <script src="scripts/view/EventsView.js"></script>
+    <script src="scripts/view/ExhibitionView.js"></script>
+    <script src="scripts/view/HomeView.js"></script>
+    <script src="scripts/view/NavigationView.js"></script>
     <script src="scripts/bundle.js"></script>
     <!-- endbuild -->
 
