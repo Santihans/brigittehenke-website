@@ -14,48 +14,49 @@ var AppRouter = Backbone.Router.extend({
   },
 
   homeRoute: function() {
-    var query = ['document.type', 'home'];
+    var query = {predicates: ['document.type', 'home']};
     var view = new HomeView();
     this._prepareView(view, query);
   },
 
   exhibitionRoute: function() {
-    var query = ['document.type', 'exhibition'];
+    var query = {predicates: ['document.type', 'exhibition']};
     var view = new ExhibitionView();
     this._prepareView(view, query);
   },
 
   collectionRoute: function(collectionId) {
-    var query = ['document.id', collectionId];
+    var query = {predicates: ['document.id', collectionId]};
     var view = new CollectionView();
     this._prepareView(view, query);
   },
 
   artworkRoute: function(collectionId, artwork) {
-    var query = ['document.id', collectionId];
+    var query = {predicates: ['document.id', collectionId]};
     var view = new CollectionView();
-    this._prepareView(view, query , artwork);
+    this._prepareView(view, query, artwork);
   },
 
   eventsRoute: function() {
+    var query = {predicates: ['document.type', 'events'], options: {orderings: '[my.events.event-year desc]'}};
     var view = new EventsView();
-    this._prepareView(view);
+    this._prepareView(view, query);
   },
 
   atelierRoute: function() {
-    var query = ['document.type', 'atelier'];
+    var query = {predicate: ['document.type', 'atelier']};
     var view = new AtelierView();
     this._prepareView(view, query);
   },
 
   biographyRoute: function() {
-    var query = ['document.type', 'biography'];
+    var query = {predicates: ['document.type', 'biography']};
     var view = new BiographyView();
     this._prepareView(view, query);
   },
 
   contactRoute: function() {
-    var query = ['document.type', 'contact'];
+    var query = {predicates: ['document.type', 'contact']};
     var view = new ContactView();
     this._prepareView(view, query);
   },
@@ -81,15 +82,16 @@ var AppRouter = Backbone.Router.extend({
   },
 
   /**
-   * @param prismicQuery
-   * @param {Array} predicates
+   * @param api
+   * @param {Object} query
    * @returns {*|Promise.<TResult>}
    * @private
    */
-  _loadPrismicContent: function(prismicQuery, predicates) {
-    return prismicQuery([
-      prismic.Prismic.Predicates.at.apply(this, predicates)
-    ]).then(function(response) {
+  _loadPrismicContent: function(api, query) {
+    var options = _.defaults(query.options, {});
+    return api([
+      prismic.Prismic.Predicates.at.apply(this, query.predicates)
+    ], options).then(function(response) {
       return response.results;
     });
   }
