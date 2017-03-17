@@ -10,8 +10,8 @@ module.exports = {
       prismicApiPromise = Prismic.api('https://brigittehenke.cdn.prismic.io/api')
         .then(function(api) {
           var prismicRef = queryString.parse(location.search)['token'];
-          return function(q) {
-            return api.query(q, {ref: prismicRef});
+          return function(q, queryOptions) {
+            return api.query(q, _.extend({ref: prismicRef}, queryOptions));
           };
         });
     }

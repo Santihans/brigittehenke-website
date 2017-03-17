@@ -8,55 +8,63 @@ var AppRouter = Backbone.Router.extend({
     'malerei/:collection': 'collectionRoute',
     'malerei/:collection/:artwork': 'artworkRoute',
     'ausstellungen': 'eventsRoute',
+    'ausstellungen/:event': 'eventRoute',
     'atelier': 'atelierRoute',
     'biographie': 'biographyRoute',
     'kontakt': 'contactRoute'
   },
 
   homeRoute: function() {
-    var query = ['document.type', 'home'];
     var view = new HomeView();
+    var query = {predicates: ['document.type', 'home']};
     this._prepareView(view, query);
   },
 
   exhibitionRoute: function() {
-    var query = ['document.type', 'exhibition'];
     var view = new ExhibitionView();
+    var query = {predicates: ['document.type', 'exhibition']};
     this._prepareView(view, query);
   },
 
   collectionRoute: function(collectionId) {
-    var query = ['document.id', collectionId];
     var view = new CollectionView();
+    var query = {predicates: ['document.id', collectionId]};
     this._prepareView(view, query);
   },
 
   artworkRoute: function(collectionId, artwork) {
-    var query = ['document.id', collectionId];
     var view = new CollectionView();
-    this._prepareView(view, query , artwork);
+    var query = {predicates: ['document.id', collectionId]};
+    this._prepareView(view, query, artwork);
   },
 
   eventsRoute: function() {
     var view = new EventsView();
-    this._prepareView(view);
+    var query = {predicates: ['document.type', 'events'], options: {orderings: '[my.events.event-year desc]'}};
+    this._prepareView(view, query);
+  },
+
+  eventRoute: function(eventId) {
+    var view = new EventView();
+    var query = {predicates: ['document.id', eventId]};
+    this._prepareView(view, query);
   },
 
   atelierRoute: function() {
-    var query = ['document.type', 'atelier'];
     var view = new AtelierView();
+    var query = {predicates: ['document.type', 'atelier']};
     this._prepareView(view, query);
   },
 
   biographyRoute: function() {
-    var query = ['document.type', 'biography'];
     var view = new BiographyView();
+    var query = {predicates: ['document.type', 'biography']};
     this._prepareView(view, query);
   },
 
   contactRoute: function() {
-    var query = ['document.type', 'contact'];
     var view = new ContactView();
+    var query = {predicates: ['document.type', 'contact']};
     this._prepareView(view, query);
   },
 
@@ -81,15 +89,16 @@ var AppRouter = Backbone.Router.extend({
   },
 
   /**
-   * @param prismicQuery
-   * @param {Array} predicates
+   * @param api
+   * @param {Object} query
    * @returns {*|Promise.<TResult>}
    * @private
    */
-  _loadPrismicContent: function(prismicQuery, predicates) {
-    return prismicQuery([
-      prismic.Prismic.Predicates.at.apply(this, predicates)
-    ]).then(function(response) {
+  _loadPrismicContent: function(api, query) {
+    var options = _.defaults(query.options, {});
+    return api([
+      prismic.Prismic.Predicates.at.apply(this, query.predicates)
+    ], options).then(function(response) {
       return response.results;
     });
   }

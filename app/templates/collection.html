@@ -22,21 +22,19 @@
       <button type="button" class="paperRipple close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <div id="galleryCarousel">
+      <div id="galleryCarousel" class="gallery">
         {{#each data}}
         <div class="item">
           <div class="item-image">
             <div class="image-wrapper">
               <div class="spinner"></div>
-              <img class="galleryImage d-block img-fluid" data-lazy="{{image}}" alt="{{caption}}">
+              <img class="galleryImage d-block img-fluid" data-lazy="{{image}}" alt="{{caption}} - Jahr: {{year}} - {{#if dimensions}}Grösse: {{dimensions.x}}x{{dimensions.y}}{{/if}}">
             </div>
           </div>
           <div class="item-info">
             <div class="galleryCard">
               <h4>{{caption}}{{#if sold}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}
               </h4>
-              <div>{{#if dimensions}}{{dimensions.x}}x{{dimensions.y}}{{/if}}</div>
-              <div>{{year}}</div>
             </div>
           </div>
         </div>
