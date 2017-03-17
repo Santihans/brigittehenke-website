@@ -1,4 +1,16 @@
 <h1>Ausstellungen</h1>
-<div class="content-container">
-  // todo
-</div>
+<ul class="events row">
+  {{#each data}}
+  <li class="events-item col-12 col-sm-6 col-md-4">
+    <a class="item paperRipple" href="#ausstellungen/{{id}}">
+      <div class="ratio-helper">
+        <img src="{{thumbnail}}" alt="{{title}}">
+      </div>
+      <div class="item-info">
+        <h3 class="text-truncate">{{title}}</h3>
+        <div>{{year}}</div>
+      </div>
+    </a>
+  </li>
+  {{/each}}
+</ul>

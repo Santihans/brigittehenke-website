@@ -1,0 +1,12 @@
+<h1>{{title}} - {{year}}</h1>
+<div class="content-container">
+  <p>{{description}}</p>
+  <div class="image">
+    <img src="{{flyer}}" alt="{{title}}">
+  </div>
+  {{#each images}}
+  <div class="image">
+    <img src="{{image}}" alt="{{caption}}">
+  </div>
+  {{/each}}
+</div>
