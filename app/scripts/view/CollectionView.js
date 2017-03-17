@@ -35,15 +35,17 @@ var CollectionView = AbstractView.extend({
       if (artwork.getNumber('artwork-dimensions-x') && artwork.getNumber('artwork-dimensions-x')) {
         dimensions = {x: artwork.getNumber('artwork-dimensions-x'), y: artwork.getNumber('artwork-dimensions-y')}
       }
-      galleryData.push({
-        uri: encodeURI(artwork.getText('artwork-caption')),
-        image: artwork.getImage('artwork-image').url,
-        thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
-        caption: artwork.getText('artwork-caption'),
-        dimensions: dimensions,
-        year: artwork.getText('artwork-year'),
-        sold: (artwork.getText('artwork-availability') && artwork.getText('artwork-availability').toLowerCase() == 'yes')
-      });
+      if (artwork.getImage('artwork-image') && artwork.getImageView('artwork-image', 'artwork-thumb')) {
+        galleryData.push({
+          uri: encodeURI(artwork.getText('artwork-caption')),
+          image: artwork.getImage('artwork-image').url,
+          thumbnail: artwork.getImageView('artwork-image', 'artwork-thumb').url,
+          caption: artwork.getText('artwork-caption'),
+          dimensions: dimensions,
+          year: artwork.getText('artwork-year'),
+          sold: (artwork.getText('artwork-availability') && artwork.getText('artwork-availability').toLowerCase() == 'yes')
+        });
+      }
     });
 
     if (null === this._baseUrl) {
