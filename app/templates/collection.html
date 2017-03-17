@@ -7,10 +7,6 @@
       <div class="ratio-helper">
         <img src="{{thumbnail}}" alt="{{caption}}">
       </div>
-      <div class="item-info">
-        <h3 class="text-truncate">{{caption}}</h3>
-        <div>{{year}}</div>
-      </div>
     </a>
   </li>
   {{/each}}
@@ -33,8 +29,9 @@
           </div>
           <div class="item-info">
             <div class="galleryCard">
-              <h4>{{caption}}{{#if sold}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}
-              </h4>
+              <h4>{{caption}}{{#if sold}}<a href="javascript:;" class="sold showLegend"><span class="sold-legend">(verkauft)</span><span class="sold-dot">&bull;</span></a>{{/if}}</h4>
+              <div>{{#if dimensions}}{{dimensions.y}}x{{dimensions.x}}{{/if}}</div>
+              <div>{{year}}</div>
             </div>
           </div>
         </div>

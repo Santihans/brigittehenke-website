@@ -1,3 +1,9 @@
 [data-view="contact"] {
+  .wrapper {
+    display: flex;
+  }
 
+  .address {
+    padding: 0 12px;
+  }
 }
