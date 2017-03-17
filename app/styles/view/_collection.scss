@@ -17,22 +17,9 @@
     .item {
       box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
       display: block;
-
-      .item-info {
-        background-color: rgba(255, 255, 255, 0.85);
-        bottom: 0;
-        font-size: .8em;
-        padding: 7px 10px;
-        position: absolute;
-        width: 100%;
-
-        h3 {
-          font-size: 1.1em;
-          margin-bottom: .4em;
-        }
-      }
     }
   }
+
   .gallery {
     .item-info {
       flex: 0 0 auto;

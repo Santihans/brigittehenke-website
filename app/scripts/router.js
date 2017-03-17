@@ -22,7 +22,7 @@ var AppRouter = Backbone.Router.extend({
 
   exhibitionRoute: function() {
     var view = new ExhibitionView();
-    var query = {predicates: ['document.type', 'exhibition']};
+    var query = {predicates: ['document.type', 'exhibition'], options: {orderings: '[my.exhibition.collection-year-end desc]'}};
     this._prepareView(view, query);
   },
 
