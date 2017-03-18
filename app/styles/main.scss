@@ -172,6 +172,12 @@ body {
         position: absolute;
         top: 0;
         width: 100%;
+
+        .spinner {
+          position: absolute;
+          top: calc(50% - 15px);
+          left: calc(50% - 15px);
+        }
       }
 
       .galleryImage {
