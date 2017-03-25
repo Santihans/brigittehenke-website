@@ -11,7 +11,6 @@ var NavigationView = AbstractView.extend({
   },
 
   initialize: function() {
-    console.log('Navigation View Initialized');
     this.ready();
   },
 

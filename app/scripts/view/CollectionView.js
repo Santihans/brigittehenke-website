@@ -20,7 +20,7 @@ var CollectionView = AbstractView.extend({
     },
 
     'click .showLegend': function(event) {
-      this.$(event.currentTarget).toggleClass('legend-visible')
+      this.$(event.currentTarget).addClass('legend-visible')
     }
   },
 

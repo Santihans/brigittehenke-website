@@ -4,7 +4,6 @@ var EventView = AbstractView.extend({
 
   setup: function(document) {
     var event = document[0];
-    console.log(event);
 
     var galleryData = [];
     var gallery = event.getGroup('events.event-images').toArray();

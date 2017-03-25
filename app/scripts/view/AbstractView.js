@@ -8,7 +8,6 @@ var AbstractView = Backbone.View.extend({
   $body: null,
 
   initialize: function() {
-    console.log('View Initialized');
     this.$body = $('body');
     this._updateNavigation();
     this._headerShadow();
