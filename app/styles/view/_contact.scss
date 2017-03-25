@@ -1,6 +1,10 @@
 [data-view="contact"] {
   .wrapper {
     display: flex;
+
+    .thumbnail {
+      width: 160px;
+    }
   }
 
   .address {
